@@ -38,7 +38,12 @@ const page = () => {
     <div>
       <h2>회원 리스트</h2>
       <DataGrid
-        rows={membersRows}
+        rows={membersRows.map((v) => {
+          const newBooks = v.rented_books
+            .map((v1) => v1.title)
+            .reduce((acc, cur) => acc + " " + cur);
+          return { ...v, rented_books: newBooks };
+        })}
         columns={columns}
         onCellDoubleClick={(params) => {
           router.push(`/members/${params.row.id}`);
